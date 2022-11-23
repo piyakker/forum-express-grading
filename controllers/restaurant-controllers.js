@@ -1,6 +1,6 @@
-const restaurantController = {
+const restaurantControllers = {
   getRestaurants: (req, res) => {
     return res.render('restaurants')
   }
 }
-module.exports = restaurantController
+module.exports = restaurantControllers
