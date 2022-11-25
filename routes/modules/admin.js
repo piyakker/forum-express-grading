@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
-const { authenticatedAdmin } = require('../../middleware/auth')
-const adminControllers = require('../../controllers/admin-controllers')
+const adminController = require('../../controllers/admin-controller')
 
-router.get('/restaurants', authenticatedAdmin, adminControllers.getRestaurants)
+router.get('/restaurants/create', adminController.createRestaurant)
+router.post('/restaurants', adminController.postRestaurant)
+router.get('/restaurants/:id', adminController.getRestaurant)
+router.get('/restaurants', adminController.getRestaurants)
 router.use('/', (req, res) => { res.redirect('/admin/restaurants') })
 
 module.exports = router

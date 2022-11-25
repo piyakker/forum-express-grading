@@ -8,7 +8,7 @@ const authenticated = (req, res, next) => {
 }
 
 const authenticatedAdmin = (req, res, next) => {
-  if (ensureAuthenticated) {
+  if (ensureAuthenticated(req)) {
     if (getUser(req).isAdmin) {
       return next()
     }
