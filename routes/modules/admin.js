@@ -8,6 +8,7 @@ router.get('/restaurants/:id/edit', adminController.editRestaurant)
 router.post('/restaurants', adminController.postRestaurant)
 router.put('/restaurants/:id', adminController.putRestaurant)
 router.get('/restaurants/:id', adminController.getRestaurant)
+router.delete('/restaurants/:id', adminController.deleteRestaurant)
 router.get('/restaurants', adminController.getRestaurants)
 router.use('/', (req, res) => { res.redirect('/admin/restaurants') })
 
