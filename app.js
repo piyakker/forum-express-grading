@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const routes = require('./routes')
 const handlebars = require('express-handlebars')
@@ -17,6 +18,7 @@ app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
