@@ -1,3 +1,8 @@
+<h1>餐廳後台</h1>
+<p><a href="/admin/restaurants">Restaurants</a> | <a href="/admin/users">Users</a></p>
+
+<br />
+<br />
 <table class="table table-bg">
   <thead class="table-dark ">
     <tr>
@@ -14,14 +19,14 @@
       <th scope="row">{{this.id}}</th>
       <td>{{this.name}}</td>
       <td>{{this.email}}</td>
-      <td>{{#compare this.isAdmin 1}}admin{{else}}user{{/compare}}</td>
+      <td>{{#if this.isAdmin}}admin{{else}}user{{/if}}</td>
       <td>
         <form action="/admin/users/{{this.id}}?_method=PATCH" method="POST">
-        {{#compare this.isAdmin 1}}
+        {{#if this.isAdmin}}
           <button type="submit" class="btn btn-link">set as user</button>
         {{else}}
           <button type="submit" class="btn btn-link">set as admin</button>
-        {{/compare}}
+        {{/if}}
         </form>
       </td>
     </tr>
