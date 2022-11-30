@@ -8,15 +8,11 @@
       style="width: 250px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
     <div class="well">
       <ul class="list-unstyled">
-        <li><strong>Opening Hour:</strong> {{restaurant.openingHours}}</li>
-        <li><strong>Tel:</strong> {{restaurant.tel}}</li>
-        <li><strong>Address:</strong> {{restaurant.address}}</li>
+        <li><strong>瀏覽次數 :</strong> {{restaurant.viewCounts}}</li>
+        <li><strong>評論數 :</strong> -</li>
+        <li><strong>收藏數 :</strong> -</li>
       </ul>
     </div>
-  </div>
-  <div class="col-md-8">
-    <p style="white-space: break-spaces;">{{restaurant.description}}</p>
-    <a href="/restaurants/{{restaurant.id}}/dashboard" class="btn btn-primary">Dashboard</a>
   </div>
   <hr>
 </div>
