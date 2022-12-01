@@ -46,7 +46,6 @@ const restaurantController = {
       nest: true
     })
       .then(restaurant => {
-        console.log(restaurant.toJSON())
         if (!restaurant) throw new Error("Restaurant didn't exist!")
         return restaurant.increment('viewCounts', { by: 1 })
       })
