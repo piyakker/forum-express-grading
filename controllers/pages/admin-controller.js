@@ -1,5 +1,5 @@
-const { Restaurant, User, Category } = require('../models') // 新增這裡
-const { localFileHandler } = require('../helpers/file-helpers')
+const { Restaurant, User, Category } = require('../../models') // 新增這裡
+const { localFileHandler } = require('../../helpers/file-helpers')
 
 const adminController = {
 
