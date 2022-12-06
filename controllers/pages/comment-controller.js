@@ -9,6 +9,11 @@ const commentController = {
     })
   },
   deleteComment: (req, res, next) => {
+    commentServices.deleteComment(req, (err, data) => {
+      if (err) return next(err)
+      req.session.createdData = data
+      res.redirect(`/restaurants/${data.restaurantId}`)
+    })
     return Comment.findByPk(req.params.id)
       .then(comment => {
         if (!comment) throw new Error("Comment didn't exist!'")
