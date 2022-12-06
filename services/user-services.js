@@ -43,8 +43,9 @@ const userServices = {
       .then(([profile, comments]) => {
         if (!profile) throw new Error('User not found!')
         const restaurants = comments.rows.map(x => x.Restaurant)
+        const { FavoritedRestaurants, LikedRestaurants, Followers, Followings, ...user } = getUser(req)
         return cb(null, {
-          user: getUser(req),
+          user,
           profile: profile.toJSON(),
           commentsCount: comments.count,
           commentedRestaurants: restaurants
