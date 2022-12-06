@@ -100,6 +100,21 @@ const adminServices = {
     })
       .then(users => cb(null, { users }))
       .catch(err => cb(err))
+  },
+  patchUser: (req, cb) => {
+    const id = Number(req.params.id)
+    return User.findByPk(id)
+      .then(user => {
+        if (user.toJSON().isAdmin === true) {
+          if (user.toJSON().email === 'root@example.com') {
+            return user
+          }
+          return user.update({ isAdmin: false })
+        }
+        return user.update({ isAdmin: true })
+      })
+      .then(updatedUser => cb(null, { user: updatedUser.toJSON() }))
+      .catch(err => cb(err))
   }
 }
 

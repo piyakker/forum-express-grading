@@ -1,4 +1,3 @@
-const { User } = require('../../models') // 新增這裡
 const adminServices = require('../../services/admin-services')
 
 const adminController = {
@@ -48,24 +47,15 @@ const adminController = {
       err ? next(err) : res.render('admin/users', data))
   },
   patchUser: (req, res, next) => {
-    const id = Number(req.params.id)
-    return User.findByPk(id)
-      .then(user => {
-        if (user.toJSON().isAdmin === true) {
-          if (user.toJSON().email === 'root@example.com') {
-            req.flash('error_messages', '禁止變更 root 權限')
-            return res.redirect('back')
-          }
-          req.flash('success_messages', '使用者權限變更成功')
-          return user.update({ isAdmin: false })
-        }
-        req.flash('success_messages', '使用者權限變更成功')
-        return user.update({ isAdmin: true })
-      })
-      .then(() => {
-        res.redirect('/admin/users')
-      })
-      .catch(err => next(err))
+    adminServices.patchUser(req, (err, data) => {
+      if (err) next(err)
+      if (data.user.email === 'root@example.com') {
+        req.flash('error_messages', '禁止變更 root 權限')
+        return res.redirect('back')
+      }
+      req.flash('success_messages', '使用者權限變更成功')
+      res.redirect('/admin/users')
+    })
   }
 }
 
