@@ -29,16 +29,7 @@ const userController = {
     userServices.getUser(req, (err, data) => err ? next(err) : res.render('users/profile', data))
   },
   editUser: (req, res, next) => {
-    const id = Number(req.params.id)
-    return User.findOne({
-      where: { id },
-      nest: true,
-      raw: true
-    })
-      .then(user => {
-        res.render('users/edit', { user })
-      })
-      .catch(err => next(err))
+    userServices.editUser(req, (err, data) => err ? next(err) : res.render('users/edit', data))
   },
   putUser: (req, res, next) => {
     const { name } = req.body

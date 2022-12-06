@@ -46,6 +46,16 @@ const userServices = {
         })
       })
       .catch(err => cb(err))
+  },
+  editUser: (req, cb) => {
+    const id = Number(req.params.id)
+    return User.findOne({
+      where: { id },
+      nest: true,
+      raw: true
+    })
+      .then(user => cb(null, { user }))
+      .catch(err => cb(err))
   }
 }
 
