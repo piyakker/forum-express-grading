@@ -34,6 +34,9 @@ const userController = {
   },
   removeFavorite: (req, res, next) => {
     userServices.removeFavorite(req, (err, data) => err ? next(err) : res.json(data))
+  },
+  addLike: (req, res, next) => {
+    userServices.addLike(req, (err, data) => err ? next(err) : res.json(data))
   }
 }
 module.exports = userController

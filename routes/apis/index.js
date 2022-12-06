@@ -29,5 +29,7 @@ router.delete('/comments/:id', authenticated, commentController.deleteComment)
 router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
 router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
 
+router.post('/like/:restaurantId', authenticated, userController.addLike)
+
 router.use('/', apiErrorHandler)
 module.exports = router
