@@ -37,6 +37,9 @@ const userController = {
   },
   addLike: (req, res, next) => {
     userServices.addLike(req, (err, data) => err ? next(err) : res.json(data))
+  },
+  removeLike: (req, res, next) => {
+    userServices.removeLike(req, (err, data) => err ? next(err) : res.json(data))
   }
 }
 module.exports = userController

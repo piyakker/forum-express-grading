@@ -1,4 +1,4 @@
-const { User, Like, Followship } = require('../../models')
+const { User, Followship } = require('../../models')
 const userServices = require('../../services/user-services')
 const userController = {
   signUpPage: (req, res) => {
@@ -55,23 +55,15 @@ const userController = {
     userServices.addLike(req, (err, data) => {
       if (err) next(err)
       req.createdData = data
-      res.redirect('back')
+      return res.redirect('back')
     })
   },
   removeLike: (req, res, next) => {
-    return Like.findOne({
-      where: {
-        userId: req.user.id,
-        restaurantId: req.params.restaurantId
-      }
+    userServices.removeLike(req, (err, data) => {
+      if (err) next(err)
+      req.destroyedData = data
+      return res.redirect('back')
     })
-      .then(like => {
-        if (!like) throw new Error("You haven't liked this restaurant")
-
-        return like.destroy()
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
   },
   getTopUsers: (req, res, next) => {
     return User.findAll({

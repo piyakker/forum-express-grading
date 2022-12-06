@@ -137,6 +137,21 @@ const userServices = {
       })
       .then(newLike => cb(null, { like: newLike }))
       .catch(err => cb(err))
+  },
+  removeLike: (req, cb) => {
+    return Like.findOne({
+      where: {
+        userId: req.user.id,
+        restaurantId: req.params.restaurantId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't liked this restaurant")
+
+        return like.destroy()
+      })
+      .then(destroyedLike => cb(null, { like: destroyedLike }))
+      .catch(err => cb(err))
   }
 }
 
