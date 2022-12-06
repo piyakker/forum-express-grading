@@ -8,6 +8,13 @@ const categoryServices = {
     ])
       .then(([categories, category]) => cb(null, { categories, category }))
       .catch(err => cb(err))
+  },
+  postCategory: (req, cb) => {
+    const { name } = req.body
+    if (!name) throw new Error('Category name is required!')
+    return Category.create({ name })
+      .then(newCategory => cb(null, { category: newCategory }))
+      .catch(err => cb(err))
   }
 }
 

@@ -6,11 +6,11 @@ const categoryController = {
       err ? next(err) : res.render('admin/categories', data))
   },
   postCategory: (req, res, next) => {
-    const { name } = req.body
-    if (!name) throw new Error('Category name is required!')
-    return Category.create({ name })
-      .then(() => res.redirect('/admin/categories'))
-      .catch(err => next(err))
+    categoryServices.postCategory(req, (err, data) => {
+      if (err) return next(err)
+      req.session.createdData = data
+      return res.redirect('/admin/categories')
+    })
   },
   putCategory: (req, res, next) => {
     const { name } = req.body
