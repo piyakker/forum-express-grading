@@ -23,10 +23,14 @@ const userServices = {
   getUser: (req, cb) => {
     const id = Number(req.params.id)
     return Promise.all([
-      User.findOne({
-        where: { id },
-        nest: true,
-        raw: true
+      User.findByPk(id, {
+        include: [
+          { model: Restaurant, as: 'FavoritedRestaurants' },
+          { model: Restaurant, as: 'LikedRestaurants' },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        nest: true
       }),
       Comment.findAndCountAll({
         where: { userId: id },
@@ -41,9 +45,9 @@ const userServices = {
         const restaurants = comments.rows.map(x => x.Restaurant)
         return cb(null, {
           user: getUser(req),
-          profile,
+          profile: profile.toJSON(),
           commentsCount: comments.count,
-          restaurants
+          commentedRestaurants: restaurants
         })
       })
       .catch(err => cb(err))

@@ -6,8 +6,8 @@
         {{else}}
         https://media.istockphoto.com/id/1197121742/zh/%E7%85%A7%E7%89%87/%E9%BB%83%E8%89%B2%E7%9A%84%E5%BF%AB%E6%A8%82%E5%B8%8C%E5%B7%B4%E7%8B%97%E7%B4%85%E9%A0%AD%E9%AB%AE%E7%9A%84%E6%97%A5%E6%9C%AC%E7%8B%97%E5%BE%AE%E7%AC%91%E8%82%96%E5%83%8F.jpg?s=612x612&w=is&k=20&c=bu2lQY3lqgAo5C3npkz1-hP9m1cfI1Fvc2OlVW73P3g=
       {{/if}}
-    "
-      style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" alt="notFound">
+    " style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"
+      alt="notFound">
   </div>
   <div class="col-md-8">
     <p>{{profile.name}}</p>
@@ -21,15 +21,61 @@
   </div>
 </div>
 <hr>
+
 <div class="row">
+  <div class="col-md-6">
     <p>{{commentsCount}}已評論餐廳</p>
-  <div class="col-md-12 bg-white">
-    {{#if restaurants.length}}
-        {{#each restaurants}}
-          <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="餐廳" style="width: 50px; height: 50px;" class="m-2"></a>
-        {{/each}}
+    <div class="bg-white">
+      {{#if commentedRestaurants.length}}
+      {{#each commentedRestaurants}}
+      <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="餐廳" style="width: 50px; height: 50px;"
+          class="m-2"></a>
+      {{/each}}
       {{else}}
       還沒有評論過唷!
-    {{/if}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="col-md-6">
+    <p>{{profile.FavoritedRestaurants.length}}已收藏餐廳</p>
+    <div class="bg-white">
+      {{#if profile.FavoritedRestaurants}}
+      {{#each profile.FavoritedRestaurants}}
+      <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="餐廳" style="width: 50px; height: 50px;"
+          class="m-2"></a>
+      {{/each}}
+      {{else}}
+      還沒有收藏唷!
+      {{/if}}
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <p>{{profile.Followers.length}}Followers</p>
+    <div class="bg-white">
+      {{#if profile.Followers}}
+      {{#each profile.Followers}}
+      <a href="/users/{{this.id}}"><img src="{{this.image}}" alt="餐廳" style="width: 50px; height: 50px;"
+          class="m-2"></a>
+      {{/each}}
+      {{else}}
+      還沒有Followers過唷!
+      {{/if}}
+    </div>
+  </div>
+  <div class="col-md-6">
+    {{!-- todo: 使用者照片還沒搞定 --}}
+    <p>{{profile.Followings.length}}Followings</p>
+    <div class="bg-white">
+      {{#if profile.Followings}}
+      {{#each profile.Followings}}
+      <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="user" style="width: 50px; height: 50px;"
+          class="m-2"></a>
+      {{/each}}
+      {{else}}
+      沒有Followings過唷!
+      {{/if}}
+    </div>
   </div>
 </div>
