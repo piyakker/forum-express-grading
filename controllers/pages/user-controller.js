@@ -1,4 +1,4 @@
-const { User, Restaurant, Favorite, Like, Followship } = require('../../models')
+const { User, Restaurant, Like, Followship } = require('../../models')
 const userServices = require('../../services/user-services')
 const userController = {
   signUpPage: (req, res) => {
@@ -45,19 +45,11 @@ const userController = {
     })
   },
   removeFavorite: (req, res, next) => {
-    return Favorite.findOne({
-      where: {
-        userId: req.user.id,
-        restaurantId: req.params.restaurantId
-      }
+    userServices.removeFavorite(req, (err, data) => {
+      if (err) next(err)
+      req.destroyedData = data
+      return res.redirect('back')
     })
-      .then(favorite => {
-        if (!favorite) throw new Error("You haven't favorited this restaurant")
-
-        return favorite.destroy()
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
   },
   addLike: (req, res, next) => {
     const { restaurantId } = req.params

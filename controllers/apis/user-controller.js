@@ -31,6 +31,9 @@ const userController = {
   },
   addFavorite: (req, res, next) => {
     userServices.addFavorite(req, (err, data) => err ? next(err) : res.json(data))
+  },
+  removeFavorite: (req, res, next) => {
+    userServices.removeFavorite(req, (err, data) => err ? next(err) : res.json(data))
   }
 }
 module.exports = userController

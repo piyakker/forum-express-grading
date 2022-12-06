@@ -100,6 +100,20 @@ const userServices = {
       })
       .then(newFavorite => cb(null, { Favorite: newFavorite.toJSON() }))
       .catch(err => cb(err))
+  },
+  removeFavorite: (req, cb) => {
+    return Favorite.findOne({
+      where: {
+        userId: req.user.id,
+        restaurantId: req.params.restaurantId
+      }
+    })
+      .then(favorite => {
+        if (!favorite) throw new Error("You haven't favorited this restaurant")
+        return favorite.destroy()
+      })
+      .then(destroyedFavorite => cb(null, { favorite: destroyedFavorite }))
+      .catch(err => cb(err))
   }
 }
 
