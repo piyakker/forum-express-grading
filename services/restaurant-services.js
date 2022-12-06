@@ -63,6 +63,20 @@ const restaurantServices = {
         })
       })
       .catch(err => cb(err))
+  },
+  getDashboard: (req, cb) => {
+    return Restaurant.findByPk(req.params.id, {
+      include: [
+        Category,
+        Comment // 引入Comment模型，在template上取得comments陣列的長度為評論數
+      ],
+      nest: true
+    })
+      .then(restaurant => {
+        if (!restaurant) throw new Error("Restaurant didn't exist!")
+        return cb(null, { restaurant: restaurant.toJSON() })
+      })
+      .catch(err => cb(err))
   }
 }
 module.exports = restaurantServices

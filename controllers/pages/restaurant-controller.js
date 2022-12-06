@@ -11,17 +11,8 @@ const restaurantController = {
       err ? next(err) : res.render('restaurant', data))
   },
   getDashboard: (req, res, next) => {
-    return Restaurant.findByPk(req.params.id, {
-      include: [
-        Category,
-        Comment // 引入Comment模型，在template上取得comments陣列的長度為評論數
-      ],
-      nest: true
-    })
-      .then(restaurant => {
-        if (!restaurant) throw new Error("Restaurant didn't exist!")
-        return res.render('dashboard', { restaurant: restaurant.toJSON() })
-      })
+    restaurantServices.getDashboard(req, (err, data) =>
+      err ? next(err) : res.render('dashboard', data))
   },
   getFeeds: (req, res, next) => {
     return Promise.all([
