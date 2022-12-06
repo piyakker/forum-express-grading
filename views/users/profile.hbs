@@ -1,13 +1,14 @@
 <div class="row bg-white">
   <div class="col-md-4">
-    <img class="img-responsive center-block" src="
-      {{#if profile.image}}
-        {{profile.image}}
-        {{else}}
-        https://media.istockphoto.com/id/1197121742/zh/%E7%85%A7%E7%89%87/%E9%BB%83%E8%89%B2%E7%9A%84%E5%BF%AB%E6%A8%82%E5%B8%8C%E5%B7%B4%E7%8B%97%E7%B4%85%E9%A0%AD%E9%AB%AE%E7%9A%84%E6%97%A5%E6%9C%AC%E7%8B%97%E5%BE%AE%E7%AC%91%E8%82%96%E5%83%8F.jpg?s=612x612&w=is&k=20&c=bu2lQY3lqgAo5C3npkz1-hP9m1cfI1Fvc2OlVW73P3g=
-      {{/if}}
-    " style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"
+    {{#if profile.image}}
+    <img class="img-responsive center-block" src="{{profile.image}}"
+      style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"
       alt="notFound">
+    {{else}}
+    <img class="img-responsive center-block" src="https://fakeimg.pl/250/"
+      style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"
+      alt="notFound">
+    {{/if}}
   </div>
   <div class="col-md-8">
     <p>{{profile.name}}</p>
@@ -56,8 +57,13 @@
     <div class="bg-white">
       {{#if profile.Followers}}
       {{#each profile.Followers}}
-      <a href="/users/{{this.id}}"><img src="{{this.image}}" alt="餐廳" style="width: 50px; height: 50px;"
+      {{#if this.image}}
+      <a href="/users/{{this.id}}"><img src="{{this.image}}" alt="user" style="width: 50px; height: 50px;"
           class="m-2"></a>
+      {{else}}
+      <a href="/users/{{this.id}}"><img src="https://fakeimg.pl/50/" alt="user" style="width: 50px; height: 50px;"
+          class="m-2"></a>
+      {{/if}}
       {{/each}}
       {{else}}
       還沒有Followers過唷!
@@ -70,8 +76,13 @@
     <div class="bg-white">
       {{#if profile.Followings}}
       {{#each profile.Followings}}
-      <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="user" style="width: 50px; height: 50px;"
+      {{#if this.image}}
+      <a href="/users/{{this.id}}"><img src="{{this.image}}" alt="user" style="width: 50px; height: 50px;"
           class="m-2"></a>
+      {{else}}
+      <a href="/users/{{this.id}}"><img src="https://fakeimg.pl/50/" alt="user" style="width: 50px; height: 50px;"
+          class="m-2"></a>
+      {{/if}}
       {{/each}}
       {{else}}
       沒有Followings過唷!
