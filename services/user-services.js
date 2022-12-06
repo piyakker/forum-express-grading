@@ -190,6 +190,20 @@ const userServices = {
       })
       .then(newFollowship => cb(null, { Followship: newFollowship }))
       .catch(err => cb(err))
+  },
+  removeFollowing: (req, cb) => {
+    Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        return followship.destroy()
+      })
+      .then(destroyedFollowship => cb(null, { followship: destroyedFollowship }))
+      .catch(err => cb(err))
   }
 }
 
