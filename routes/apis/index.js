@@ -15,6 +15,7 @@ router.post('/signup', userController.signUp)
 
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id', authenticated, userController.getUser)
+router.put('/users/:id', authenticated, userController.putUser)
 
 router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
 router.get('/restaurants/feeds', authenticated, restController.getFeeds)

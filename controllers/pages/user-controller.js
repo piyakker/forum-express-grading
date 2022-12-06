@@ -1,6 +1,5 @@
 const { User, Restaurant, Favorite, Like, Followship } = require('../../models')
 const userServices = require('../../services/user-services')
-const { localFileHandler } = require('../../helpers/file-helpers')
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -32,25 +31,11 @@ const userController = {
     userServices.editUser(req, (err, data) => err ? next(err) : res.render('users/edit', data))
   },
   putUser: (req, res, next) => {
-    const { name } = req.body
-    if (!name) throw new Error('User name is required!')
-    const { file } = req
-    return Promise.all([
-      User.findOne({ where: { id: req.params.id } }),
-      localFileHandler(file)
-    ])
-      .then(([user, filePath]) => {
-        if (!user) throw new Error("User didn't exist!")
-        return user.update({
-          name,
-          image: filePath || user.image
-        })
-      })
-      .then(() => {
-        req.flash('success_messages', '使用者資料編輯成功')
-        res.redirect(`/users/${req.params.id}`)
-      })
-      .catch(err => next(err))
+    userServices.putUser(req, (err, data) => {
+      if (err) next(err)
+      req.flash('success_messages', '使用者資料編輯成功')
+      res.redirect(`/users/${req.params.id}`)
+    })
   },
   addFavorite: (req, res, next) => {
     const { restaurantId } = req.params
