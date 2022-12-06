@@ -152,6 +152,22 @@ const userServices = {
       })
       .then(destroyedLike => cb(null, { like: destroyedLike }))
       .catch(err => cb(err))
+  },
+  getTopUsers: (req, cb) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(users => {
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length,
+            isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        return cb(null, { users: result })
+      })
+      .catch(err => cb(err))
   }
 }
 

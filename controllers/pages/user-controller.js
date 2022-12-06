@@ -66,20 +66,8 @@ const userController = {
     })
   },
   getTopUsers: (req, res, next) => {
-    return User.findAll({
-      include: [{ model: User, as: 'Followers' }]
-    })
-      .then(users => {
-        const result = users
-          .map(user => ({
-            ...user.toJSON(),
-            followerCount: user.Followers.length,
-            isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
-          }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('top-users', { users: result })
-      })
-      .catch(err => next(err))
+    userServices.getTopUsers(req, (err, data) =>
+      err ? next(err) : res.render('top-users', data))
   },
   addFollowing: (req, res, next) => {
     const { userId } = req.params

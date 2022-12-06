@@ -40,6 +40,9 @@ const userController = {
   },
   removeLike: (req, res, next) => {
     userServices.removeLike(req, (err, data) => err ? next(err) : res.json(data))
+  },
+  getTopUsers: (req, res, next) => {
+    userServices.getTopUsers(req, (err, data) => err ? next(err) : res.json(data))
   }
 }
 module.exports = userController

@@ -13,6 +13,7 @@ router.use('/admin', authenticated, authenticatedAdmin, admin)
 router.post('/signin', passport.authenticate('local', { session: false }), userController.signIn)
 router.post('/signup', userController.signUp)
 
+router.get('/users/top', userController.getTopUsers)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id', authenticated, userController.getUser)
 router.put('/users/:id', authenticated, userController.putUser)
