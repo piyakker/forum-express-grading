@@ -1,6 +1,5 @@
-const { User, Comment, Restaurant, Favorite, Like, Followship } = require('../../models')
+const { User, Restaurant, Favorite, Like, Followship } = require('../../models')
 const userServices = require('../../services/user-services')
-const { getUser } = require('../../helpers/auth-helpers')
 const { localFileHandler } = require('../../helpers/file-helpers')
 const userController = {
   signUpPage: (req, res) => {
@@ -27,33 +26,7 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res, next) => {
-    const id = Number(req.params.id)
-    // 取得Comment的數量及各個comment所屬之餐廳
-    return Promise.all([
-      User.findOne({
-        where: { id },
-        nest: true,
-        raw: true
-      }),
-      Comment.findAndCountAll({
-        where: { userId: id },
-        include: Restaurant,
-        order: [['id', 'desc']], // 新的評論在前
-        nest: true,
-        raw: true
-      })
-    ])
-      .then(([profile, comments]) => {
-        if (!profile) throw new Error('User not found!')
-        const restaurants = comments.rows.map(x => x.Restaurant)
-        return res.render('users/profile', {
-          user: getUser(req),
-          profile,
-          commentsCount: comments.count,
-          restaurants
-        })
-      })
-      .catch(err => next(err))
+    userServices.getUser(req, (err, data) => err ? next(err) : res.render('users/profile', data))
   },
   editUser: (req, res, next) => {
     const id = Number(req.params.id)
