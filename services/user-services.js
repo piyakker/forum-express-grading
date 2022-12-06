@@ -1,4 +1,4 @@
-const { User, Restaurant, Comment } = require('../models')
+const { User, Restaurant, Comment, Favorite } = require('../models')
 const { getUser } = require('../helpers/auth-helpers')
 const { localFileHandler } = require('../helpers/file-helpers')
 const bcrypt = require('bcryptjs')
@@ -76,6 +76,29 @@ const userServices = {
       .then(updatedUser => {
         cb(null, { user: updatedUser })
       })
+      .catch(err => cb(err))
+  },
+  addFavorite: (req, cb) => {
+    const { restaurantId } = req.params
+    return Promise.all([
+      Restaurant.findByPk(restaurantId),
+      Favorite.findOne({
+        where: {
+          userId: req.user.id,
+          restaurantId
+        }
+      })
+    ])
+      .then(([restaurant, favorite]) => {
+        if (!restaurant) throw new Error("Restaurant didn't exist!")
+        if (favorite) throw new Error('You have favorited this restaurant!')
+
+        return Favorite.create({
+          userId: req.user.id,
+          restaurantId
+        })
+      })
+      .then(newFavorite => cb(null, { Favorite: newFavorite.toJSON() }))
       .catch(err => cb(err))
   }
 }

@@ -26,5 +26,7 @@ router.get('/restaurants', authenticated, restController.getRestaurants)
 router.post('/comments', authenticated, commentController.postComment)
 router.delete('/comments/:id', authenticated, commentController.deleteComment)
 
+router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+
 router.use('/', apiErrorHandler)
 module.exports = router
