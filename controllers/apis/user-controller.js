@@ -43,6 +43,9 @@ const userController = {
   },
   getTopUsers: (req, res, next) => {
     userServices.getTopUsers(req, (err, data) => err ? next(err) : res.json(data))
+  },
+  addFollowing: (req, res, next) => {
+    userServices.addFollowing(req, (err, data) => err ? next(err) : res.json(data))
   }
 }
 module.exports = userController

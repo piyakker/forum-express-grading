@@ -1,4 +1,4 @@
-const { User, Restaurant, Comment, Favorite, Like } = require('../models')
+const { User, Restaurant, Comment, Favorite, Like, Followship } = require('../models')
 const { getUser } = require('../helpers/auth-helpers')
 const { localFileHandler } = require('../helpers/file-helpers')
 const bcrypt = require('bcryptjs')
@@ -167,6 +167,28 @@ const userServices = {
           .sort((a, b) => b.followerCount - a.followerCount)
         return cb(null, { users: result })
       })
+      .catch(err => cb(err))
+  },
+  addFollowing: (req, cb) => {
+    const { userId } = req.params
+    Promise.all([
+      User.findByPk(userId),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User didn't exist!")
+        if (followship) throw new Error('You are already following this user!')
+        return Followship.create({
+          followerId: req.user.id,
+          followingId: userId
+        })
+      })
+      .then(newFollowship => cb(null, { Followship: newFollowship }))
       .catch(err => cb(err))
   }
 }
