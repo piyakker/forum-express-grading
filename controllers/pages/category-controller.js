@@ -1,4 +1,3 @@
-const { Category } = require('../../models')
 const categoryServices = require('../../services/category-services')
 const categoryController = {
   getCategories: (req, res, next) => {
@@ -41,13 +40,11 @@ const categoryController = {
     //   })
     //   .then(() => res.redirect('/admin/categories'))
     //   .catch(err => next(err))
-    return Category.findByPk(req.params.id)
-      .then(category => {
-        if (!category) throw new Error("Category didn't exist!")
-        return category.destroy()
-      })
-      .then(() => res.redirect('/admin/categories'))
-      .catch(err => next(err))
+    categoryServices.deleteCategory(req, (err, data) => {
+      if (err) return next(err)
+      req.session.createdData = data
+      return res.redirect('/admin/categories')
+    })
   }
 }
 module.exports = categoryController

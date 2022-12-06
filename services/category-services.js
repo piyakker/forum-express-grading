@@ -26,6 +26,15 @@ const categoryServices = {
       })
       .then(updatedCategory => cb(null, { category: updatedCategory }))
       .catch(err => cb(err))
+  },
+  deleteCategory: (req, cb) => {
+    return Category.findByPk(req.params.id)
+      .then(category => {
+        if (!category) throw new Error("Category didn't exist!")
+        return category.destroy()
+      })
+      .then(destroyedCategory => cb(null, { category: destroyedCategory }))
+      .catch(err => cb(err))
   }
 }
 
