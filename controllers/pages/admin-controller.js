@@ -44,11 +44,8 @@ const adminController = {
     })
   },
   getUsers: (req, res, next) => {
-    return User.findAll({
-      raw: true
-    })
-      .then(users => res.render('admin/users', { users }))
-      .catch(err => next(err))
+    adminServices.getUsers(req, (err, data) =>
+      err ? next(err) : res.render('admin/users', data))
   },
   patchUser: (req, res, next) => {
     const id = Number(req.params.id)

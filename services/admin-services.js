@@ -1,4 +1,4 @@
-const { Restaurant, Category } = require('../models') // 新增這裡
+const { Restaurant, Category, User } = require('../models') // 新增這裡
 const { localFileHandler } = require('../helpers/file-helpers')
 
 const adminServices = {
@@ -92,6 +92,13 @@ const adminServices = {
         return restaurant.destroy()
       })
       .then(deletedRestaurant => cb(null, { restaurant: deletedRestaurant }))
+      .catch(err => cb(err))
+  },
+  getUsers: (req, cb) => {
+    return User.findAll({
+      raw: true
+    })
+      .then(users => cb(null, { users }))
       .catch(err => cb(err))
   }
 }
