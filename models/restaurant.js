@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     openingHours: DataTypes.STRING,
     description: DataTypes.TEXT,
     image: DataTypes.STRING,
+    categoryId: DataTypes.INTEGER,
     viewCounts: DataTypes.INTEGER
   }, {
     sequelize,
