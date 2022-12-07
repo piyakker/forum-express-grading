@@ -26,7 +26,7 @@ const commentServices = {
         if (!comment) throw new Error("Comment didn't exist!'")
         return comment.destroy()
       })
-      .then(deletedComment => cb(null, { comment: deletedComment, restaurantId: req.params.id }))
+      .then(deletedComment => cb(null, { comment: deletedComment, restaurantId: deletedComment.restaurantId }))
       .catch(err => cb(err))
   }
 }

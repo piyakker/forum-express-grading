@@ -60,7 +60,10 @@ const userServices = {
       nest: true,
       raw: true
     })
-      .then(user => cb(null, { user }))
+      .then(user => {
+        if (!user) throw new Error('User not found!')
+        cb(null, { user })
+      })
       .catch(err => cb(err))
   },
   putUser: (req, cb) => {
